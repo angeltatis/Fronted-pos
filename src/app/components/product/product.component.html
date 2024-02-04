@@ -1,0 +1,482 @@
+<div class="flex min-h-screen bg-gray-100">
+  <!-- Container for centering the form on the screen -->
+  <div class="m-auto bg-white p-6 rounded shadow-lg w-full max-w-4xl">
+    <h2 class="text-2xl font-semi-bold mb-4 text-gray-800">
+      Mantenimiento Producto
+    </h2>
+    <form [formGroup]="formProduct" class="space-y-4">
+      <!-- Product Code -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
+        <!-- Columna para el formulario -->
+        <div>
+          <!-- Campo de Código -->
+          <div class="mb-4">
+            <label for="codpro" class="block text-sm font-medium text-gray-700"
+              >Code</label
+            >
+            <input
+              type="text"
+              id="codpro"
+              name="codpro"
+              class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              placeholder="Enter product code"
+            />
+          </div>
+
+          <!-- Campo de Descripción -->
+          <div class="mb-4">
+            <label
+              for="description"
+              class="block text-sm font-medium text-gray-700"
+              >Description</label
+            >
+            <textarea
+              id="description"
+              name="description"
+              class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              placeholder="Enter product description"
+            ></textarea>
+          </div>
+        </div>
+
+        <div
+          class="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-md"
+        >
+          <!-- Visualización de la Imagen -->
+          <div class="mb-1 w-40 h-40 relative">
+            <!-- Agregar un overlay si no hay imagen cargada -->
+            <div
+              class="{{
+                imageUrl ? 'hidden' : 'absolute'
+              }} inset-0 bg-gray-200 flex items-center justify-center text-gray-500"
+            >
+              No hay imagen
+            </div>
+            <img
+              src="{{ imageUrl }}"
+              alt="Imagen cargada"
+              class="w-full h-full object-cover rounded-lg shadow"
+              fill="imageUrl"
+            />
+          </div>
+
+          <!-- Botón para Cargar Imagen -->
+          <p-fileUpload
+            chooseLabel="Subir"
+            mode="basic"
+            (onUpload)="onUpload($event)"
+            accept="image/*"
+            class="mt-1 text-white font-semibold py-3 px-6 rounded-lg shadow"
+          >
+          </p-fileUpload>
+        </div>
+      </div>
+
+      <p-divider></p-divider>
+      <div class="flex flex-col space-y-6">
+        <p-tabView class="tabview-custom">
+          <p-tabPanel>
+            <ng-template pTemplate="header">
+              <i class="pi pi-cog text-gray-600"></i>
+              <span class="ml-2 font-semibold">General</span>
+            </ng-template>
+
+            <div class="space-y-4 p-4 bg-white shadow-md rounded-lg">
+              <!-- Tipo Dropdown y Botón -->
+              <div class="flex items-center justify-between">
+                <p-dropdown
+                  formControlName="tipo"
+                  [options]="unids"
+                  optionLabel="name"
+                  placeholder="Tipo"
+                  class="flex-1 mr-2 border border-gray-300 rounded-md p-2"
+                ></p-dropdown>
+                <p-button
+                  (click)="showTipo()"
+                  icon="pi pi-plus"
+                  class="flex-none w-10 h-10 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                ></p-button>
+              </div>
+
+              <!-- Departamento Dropdown y Botón -->
+              <div class="flex items-center justify-between">
+                <p-dropdown
+                  formControlName="departamento"
+                  [options]="unids"
+                  optionLabel="name"
+                  placeholder="Departamento"
+                  class="flex-grow mr-2 border border-gray-300 rounded-md shadow-sm p-2"
+                ></p-dropdown>
+                <p-button
+                  (click)="showDepartamento()"
+                  icon="pi pi-plus"
+                  class="bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                ></p-button>
+              </div>
+
+              <!-- Grupo Dropdown y Botón -->
+              <div class="flex items-center justify-between">
+                <p-dropdown
+                  formControlName="grupo"
+                  [options]="unids"
+                  optionLabel="name"
+                  placeholder="Grupo"
+                  class="flex-grow mr-2 border border-gray-300 rounded-md shadow-sm p-2"
+                ></p-dropdown>
+                <p-button
+                  (click)="showGrupo()"
+                  icon="pi pi-plus"
+                  class="bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                ></p-button>
+              </div>
+
+              <!-- Sub-Grupo Dropdown y Botón -->
+              <div class="flex items-center justify-between">
+                <p-dropdown
+                  formControlName="subGrupo"
+                  [options]="unids"
+                  optionLabel="name"
+                  placeholder="Sub-Grupo"
+                  class="flex-grow mr-2 border border-gray-300 rounded-md shadow-sm p-2"
+                ></p-dropdown>
+                <p-button
+                  (click)="showSubGrupo()"
+                  icon="pi pi-plus"
+                  class="bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                ></p-button>
+              </div>
+            </div>
+          </p-tabPanel>
+
+          <p-tabPanel header="Precios & Costos">
+            <ng-template pTemplate="header">
+              <i class="pi pi-money-bill text-gray-600"></i>
+              <span class="ml-2 font-semibold">Precios & Costos</span>
+            </ng-template>
+
+            <div class="card mt-2 flex justify-content-center">
+              <div
+                class="flex items-center border border-gray-300 rounded mr-1 p-2"
+                style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)"
+              >
+                <p-dropdown
+                  formControlName="unidved"
+                  [options]="unids"
+                  optionLabel="name"
+                  placeholder="Unidad Venta"
+                  class="flex-1 appearance-none"
+                ></p-dropdown>
+                <p-button
+                  (click)="showUiodad()"
+                  icon="pi pi-plus"
+                  severity="info"
+                  class="shadow-md ml-2"
+                >
+                </p-button>
+              </div>
+              <div
+                class="flex items-center border border-gray-300 rounded mr-1 p-2"
+                style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)"
+              >
+                <p-dropdown
+                  formControlName="unidCompra"
+                  [options]="unids"
+                  optionLabel="name"
+                  placeholder="Unidad Compra"
+                  class="flex-1 appearance-none"
+                ></p-dropdown>
+              </div>
+            </div>
+
+            <p-divider
+              ><strong (click)="ocultarDetalle()" class="cursor-pointer"
+                >Insertar Unidad Precios</strong
+              >
+            </p-divider>
+
+            @if(mostrarDetalleUnid){
+            <div class="card overflow-hidden rounded-lg">
+              <table class="w-full text-sm text-left text-gray-700">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                  <tr>
+                    <th class="px-6 py-3">Código</th>
+                    <th class="px-6 py-3">Descripción</th>
+                    <th class="px-6 py-3">Contenido</th>
+                    <th class="px-6 py-3">Precio #1</th>
+                    <th class="px-6 py-3">Precio #2</th>
+                    <th class="px-6 py-3">Precio #3</th>
+                    <th class="px-6 py-3">Estado</th>
+                  </tr>
+                </thead>
+
+                <tbody class="bg-white divide-y divide-gray-200">
+                  @for (item of itemunid ; track item.coduni){
+                  <tr>
+                    <td class="px-6 py-4">{{ item.coduni }}</td>
+                    <td class="px-6 py-4">{{ item.desuni }}</td>
+                    <td
+                      contenteditable="true"
+                      (input)="soloNumeros($event)"
+                      class="px-6 py-4"
+                    >
+                      {{ item.contenido }}
+                    </td>
+                    <td class="px-6 py-4">
+                      {{ item.precio1 | currency : "USD" }}
+                    </td>
+                    <td class="px-6 py-4">
+                      {{ item.precio2 | currency : "USD" }}
+                    </td>
+                    <td class="px-6 py-4">
+                      {{ item.precio3 | currency : "USD" }}
+                    </td>
+                    <td class="px-6 py-4">
+                      <p-input
+                        type="checkbox"
+                        formControlName="estado"
+                        (change)="cambiarEstado(item)"
+                      />
+                    </td>
+                  </tr>
+                  } @empty {
+                  <tr>
+                    <td colspan="7" class="text-center text-gray-500 px-6 py-4">
+                      No contiene items
+                    </td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+            }
+
+            <div>
+              <p-divider class="p-divider-content" (click)="ocultarCostos()"
+                ><strong class="cursor-pointer"> Costos </strong>
+              </p-divider>
+
+              @if (mostrarCostos){
+              <fieldset class="mt-6 p-4 bg-white rounded-md">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <!-- Costo de Compra -->
+                  <div>
+                    <label
+                      for="costo1"
+                      class="block text-sm font-medium text-gray-700 mb-1"
+                      >Costo de Compra</label
+                    >
+                    <p-inputNumber
+                      formControlName="costo1"
+                      inputId="costo1"
+                      [min]="0.0"
+                      [minFractionDigits]="2"
+                      class="w-full"
+                    ></p-inputNumber>
+                  </div>
+
+                  <!-- Ultima Compra -->
+                  <div>
+                    <label
+                      for="costo2"
+                      class="block text-sm font-medium text-gray-700 mb-1"
+                      >Última Compra</label
+                    >
+                    <p-inputNumber
+                      formControlName="costo2"
+                      inputId="costo2"
+                      [min]="0.0"
+                      [minFractionDigits]="2"
+                      class="w-full"
+                    ></p-inputNumber>
+                  </div>
+
+                  <!-- Costo Promedio -->
+                  <div>
+                    <label
+                      for="costo3"
+                      class="block text-sm font-medium text-gray-700 mb-1"
+                      >Costo Promedio</label
+                    >
+                    <p-inputNumber
+                      formControlName="costo3"
+                      inputId="costo3"
+                      [min]="0.0"
+                      [minFractionDigits]="2"
+                      class="w-full"
+                    ></p-inputNumber>
+                  </div>
+                </div>
+              </fieldset>
+              }
+
+              <p-divider class="p-divider-content" (click)="ocultarPrecios()"
+                ><strong class="cursor-pointer"> Unidad </strong>
+              </p-divider>
+
+              @if(mostrarPrecios){
+              <fieldset
+                class="card mt-6 flex flex-col md:flex-row justify-center gap-4"
+              >
+                <div class="flex border border-gray-300 rounded">
+                  <input
+                    pInputText
+                    [readonly]="true"
+                    pKeyFilter="int"
+                    placeholder="Unidad"
+                    formControlName="coduni"
+                    class="flex-1 px-4 py-2 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                  />
+                  <p-button
+                    (click)="showConsultaUnidad()"
+                    type="button"
+                    pButton
+                    icon="pi pi-search"
+                    class="px-4 py-2 bg-yellow-400 text-gray-800 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 rounded-r-lg"
+                  ></p-button>
+                </div>
+                @if (isCodInvalid){
+                <i class="pi pi-exclamation-triangle"></i>
+                }
+                <input
+                  type="text"
+                  pInputText
+                  [readonly]="true"
+                  formControlName="desuni"
+                  placeholder="Descripción de la Unidad"
+                  class="ml-4 flex-1 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                />
+                @if (isDesInvalid){
+                <i class="pi pi-exclamation-triangle"></i>
+                }
+              </fieldset>
+
+              <fieldset
+                class="card mt-6 flex flex-col md:flex-row justify-center gap-4"
+              >
+                <div class="flex-auto">
+                  <label class="mb-2 block font-bold" for="precio1"
+                    >Precio #1</label
+                  >
+
+                  <p-inputNumber
+                    formControlName="precio1"
+                    [showButtons]="true"
+                    inputId="precio1"
+                    name="precio1"
+                    mode="currency"
+                    currency="USD"
+                    (onBlur)="vacioInputNumber('precio1')"
+                    (focusout)="vacioInputNumber('precio1')"
+                    [min]="0.0"
+                  >
+                  </p-inputNumber>
+                </div>
+                @if (isPre1Invalid){
+                <i class="pi pi-exclamation-triangle"></i>
+                }
+                <div class="flex-auto">
+                  <label class="mb-2 block font-bold" for="precio2"
+                    >Precio #2</label
+                  >
+                  <p-inputNumber
+                    (onBlur)="vacioInputNumber('precio1')"
+                    (focusout)="vacioInputNumber('precio1')"
+                    decrementButtonClass="p-button-help"
+                    incrementButtonClass="p-button-help"
+                    formControlName="precio2"
+                    [showButtons]="true"
+                    inputId="precio2"
+                    mode="currency"
+                    currency="USD"
+                    [min]="0.0"
+                  >
+                  </p-inputNumber>
+                </div>
+                <div class="flex-auto">
+                  <label class="mb-2 block font-bold" for="precio3"
+                    >Precio #3</label
+                  >
+                  <p-inputNumber
+                    (onBlur)="vacioInputNumber('precio1')"
+                    (focusout)="vacioInputNumber('precio1')"
+                    decrementButtonClass="p-button-secondary"
+                    incrementButtonClass="p-button-secondary"
+                    formControlName="precio3"
+                    [showButtons]="true"
+                    inputId="precio3"
+                    mode="currency"
+                    currency="USD"
+                    [min]="0.0"
+                  >
+                  </p-inputNumber>
+                </div>
+              </fieldset>
+
+              <div class="card mt-2">
+                <div class="flex justify-center flex-wrap gap-3 mb-4 mt-4">
+                  <p-button
+                    (click)="validarEntradaUnid()"
+                    icon="pi pi-save"
+                    class="rounded-full p-2"
+                  ></p-button>
+                  <p-button
+                    icon="pi pi-replay"
+                    severity="warning"
+                    class="rounded-full p-2"
+                  ></p-button>
+                  <p-button
+                    icon="pi pi-plus-circle"
+                    severity="success"
+                    class="rounded-full p-2"
+                  ></p-button>
+                  <p-button
+                    icon="pi pi-search"
+                    severity="help"
+                    class="rounded-full p-2"
+                  ></p-button>
+                </div>
+              </div>
+              }
+            </div>
+          </p-tabPanel>
+
+          <p-tabPanel header="Controles">
+            <ng-template pTemplate="header">
+              <i class="pi pi-check-circle text-gray-600"></i>
+              <span class="ml-2 font-semibold">Controles</span>
+            </ng-template>
+            <div class="flex items-center">
+              <p-checkbox
+                formControlName="conexit"
+                [binary]="true"
+                inputId="binary"
+              ></p-checkbox>
+              <label for="binary" class="ml-2">Controla existencia</label>
+            </div>
+          </p-tabPanel>
+        </p-tabView>
+      </div>
+
+      <p-divider></p-divider>
+      <div class="container flex space-x-4 mt-4">
+        <p-toast
+          [showTransformOptions]="'translateY(100%)'"
+          [showTransitionOptions]="'1000ms'"
+          [hideTransitionOptions]="'1000ms'"
+        ></p-toast>
+        <button
+          type="button"
+          class="flex-1 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mt-4"
+        >
+          Save
+        </button>
+        <button
+          type="button"
+          class="flex-1 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mt-4"
+        >
+          Clear
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

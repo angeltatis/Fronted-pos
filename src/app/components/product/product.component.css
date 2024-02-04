@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+:root .tabview-custom .p-tabview-nav li.p-highlight a {
+  background-color: #E1F5FE ; /* Utiliza !important solo como último recurso */
+  color: #3399FF ;
+}
+
+samp{
+  font-size: 18px;
+}
+.pi-exclamation-triangle {
+  color: red;
+  /* otros estilos como margen, tamaño, etc. */
+}
+/*
+.custom-save {
+  background-color: #4CAF50; !* Verde *!
+  color: white;
+}
+
+.custom-replay {
+  background-color: #2196F3; !* Azul *!
+  color: white;
+}
+
+.custom-plus-circle {
+  background-color: #f44336; !* Rojo *!
+  color: white;
+}
+
+.custom-search {
+  background-color: #ffeb3b; !* Amarillo *!
+  color: black;
+}
+
+!* Estilos para el hover *!
+.custom-save:hover, .custom-replay:hover, .custom-plus-circle:hover, .custom-search:hover {
+  opacity: 0.8;
+}
+*/

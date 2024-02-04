@@ -1,0 +1,40 @@
+<form [formGroup]="form" class="max-w-md mx-auto p-6 bg-white rounded-md shadow-md">
+  <div class="mb-6">
+    <label for="text" class="block mb-2 text-gray-800">Descripción Unidad</label>
+    <div class="relative">
+      <input
+        type="text"
+        name="text"
+        id="text"
+        formControlName="text"
+        ngDefaultControl
+        class="w-full px-4 py-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+      />
+      <p-button
+        type="button"
+        icon="pi pi-search"
+        class="absolute right-2 top-2"
+        (click)="buscar()"
+      ></p-button>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <button
+      pButton
+      type="button"
+      (click)="guardar()"
+      class="inline-block px-6 py-3 mr-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+    >
+      Guardar
+    </button>
+    <button
+      pButton
+      type="button"
+      (click)="cancelar()"
+      class="inline-block px-6 py-3 text-white bg-purple-700 rounded-md hover:bg-purple-800 focus:outline-none focus:ring focus:border-purple-500"
+    >
+      Cancelar
+    </button>
+  </div>
+</form>

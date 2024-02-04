@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/bootstrap4-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+
+:root .tabview-custom .p-tabview-nav li.p-highlight a {
+  background-color: #E1F5FE  !important; /* Utiliza !important solo como último recurso */
+  color: #3399FF !important;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
