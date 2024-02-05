@@ -89,6 +89,7 @@ export class ProductComponent implements OnInit {
   mostrarCostos: boolean = false;
   mostrarDetalleUnid: boolean = true;
   mostrarPrecios: boolean = true;
+  estado:  boolean =  true;
 
 
   isCodInvalid: boolean = false;

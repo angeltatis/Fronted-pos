@@ -1,21 +1,22 @@
 <form [formGroup]="form" class="max-w-md mx-auto p-6 bg-white rounded-md shadow-md">
   <div class="mb-6">
-    <label for="text" class="block mb-2 text-gray-800">Descripción Unidad</label>
+    <label for="desuni" class="block mb-2 text-gray-800">Descripción Unidad</label>
     <div class="relative">
       <input
         type="text"
-        name="text"
-        id="text"
-        formControlName="text"
+        name="desuni"
+        id="desuni"
+        formControlName="desuni"
         ngDefaultControl
         class="w-full px-4 py-2 border rounded-md bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
       />
-      <p-button
+      <button
         type="button"
+        pButton
         icon="pi pi-search"
         class="absolute right-2 top-2"
         (click)="buscar()"
-      ></p-button>
+      ></button>
     </div>
   </div>
 

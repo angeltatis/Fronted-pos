@@ -1,5 +1,5 @@
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Unidad } from "../interfaces/Unidad";
 
@@ -20,8 +20,13 @@ export class UnidadService {
   }
 
   crearUnidad(descripcion: { desuni: any }): Observable<Unidad> {
-    return this.http.post<Unidad>(this.apiUrl, {desuni: descripcion});
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.http.post<Unidad>(this.apiUrl, descripcion, { headers });
   }
+
+
 
   actualizarUnidad(unidad: Unidad): Observable<Unidad> {
     return this.http.put<Unidad>(`${this.apiUrl}/${unidad.coduni}`, unidad);

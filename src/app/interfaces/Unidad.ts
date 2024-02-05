@@ -1,7 +1,7 @@
 export interface Unidad {
   coduni?: number;
   desuni: string;
- contenido: number;
+  //contenido: number;
   estado?: boolean;
 
 }
